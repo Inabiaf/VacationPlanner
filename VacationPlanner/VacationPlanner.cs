@@ -1,6 +1,6 @@
 /*  George Fox
-    7/17/2018
-    Assignment 4
+    7/26/2018
+    Vacation Planner Assignment
 */
 using System;
 
@@ -10,39 +10,28 @@ namespace Assignment4
     {
         static void Main(string[] args)
         {
+            //Tells the user how to use the program
             Console.WriteLine("This program will help you plan your vacation!");
             Console.WriteLine("First, you will input the number of places you would like to go,");
             Console.WriteLine("then input information about each.");
             int Venues = AskForVenues();
 
-            //Makes an array for the number of Venues, accessed with Venue[i] where i=venue number
+            //Makes an array for the number of venues, accessed with Venue[i] where i=venue number
             Vacation[] Venue = new Vacation[Venues];
 
+            //The user inputs descriptions for venues 0 through i
             for (int i = 0; i < Venues; i++)
             {
-                
                 Venue[i] = new Vacation();
                 Console.WriteLine("Venue #{0}", i + 1);
-                //How do I save DescribeVenues into the array as an object?
-                //Venue[i] = DescribeVenues(); - the next line is a modification if this to accommodate my adjustment of your method with the input "out" parameter
                 DescribeVenues(out Venue[i]);
             }
 
+            //Takes the array and current number of venues to the end menu
             EndMenu(Venue, Venues);
-
-
-
-
-
-            //I am not sure how to resize the array here.
-            /*I would check this link for the info on how to resize, but you are on the right track. A very good article with an example: https://msdn.microsoft.com/en-us/library/bb348051(v=vs.110).aspx  
-Now, you need to also think on when you are calling this. I see multiple ways, one of which is to look into organizing some kind of do...while, so you can ask your user if more  vacation plans are needed after all the rest of the spots are taken, You would need to draw out this logic to decide what structure and how to use it... :) I am very happy to see you going beyond the course coverage! */
-            
-
-
         }
 
-        public static void DescribeVenues(out Vacation v) // I would use this type of parameters instead of parameter by value, this would allow you to fill in the values and use them outside of the method
+        public static void DescribeVenues(out Vacation v) //Thanks to Dr. Olson for the out parameter to bring the array in and out of this method!
         {
             v = new Vacation();
             v.LocationName = AskForLocationName();
@@ -63,7 +52,7 @@ Now, you need to also think on when you are calling this. I see multiple ways, o
 
             Console.Write("Type A to add more venues, or enter the venue number to display it's information\n");
             inputWhatNow = Console.ReadLine();
-            if (int.TryParse(inputWhatNow, out d))
+            if (int.TryParse(inputWhatNow, out d)) //if the user puts in a number, they will get back information on that venue, assuming the number is with the range of existing venues.
             {
                 if (d > 0 && d <= Venues)
                 {
@@ -78,22 +67,22 @@ Now, you need to also think on when you are calling this. I see multiple ways, o
                     Console.Write("Venue out of range!\n");
                 }
             }
-            foreach (string test in addOptions)
+            foreach (string test in addOptions) //tests input against a number of options so the user can type out "Add", or simply "a"
                 if (inputWhatNow.Equals(test))
                 {
-
                     int newVenues = AskForVenues();
                     Array.Resize(ref Venue, Venue.Length + newVenues);
-                    for (int i = 0; i < newVenues; i++)
+                    for (int i = 0; i < newVenues; i++) //a loop that adds new venues without overwriting old ones
                     {
                         Venue[i + Venues] = new Vacation();
                         Console.WriteLine("Venue #{0}", i + 1 + Venues);
                         DescribeVenues(out Venue[i + Venues]);
                     }
+                //Cleans up, adds new venues to the running total and reruns this method.
                 Venues = Venues + newVenues;
                 EndMenu(Venue, Venues);
                 }
-
+            //Assuming none of the if conditions were met, input is considered invalid and this method restarts.
             Console.Write("Invalid input.\n");
             EndMenu(Venue, Venues);
         }
