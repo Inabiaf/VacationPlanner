@@ -16,21 +16,14 @@ namespace Assignment4
             Console.WriteLine("");
             int Venues = AskForVenues();
 
+            //Makes an array for the number of Venues, acessed with Venue[i] where i=venue number
             Vacation[] Venue = new Vacation[Venues];
 
             for (int i = 0; i < Venues; i++)
             {
                 Console.WriteLine("Venue #{0}", i + 1);
-
-                Venue[i] = new Vacation();
-                Venue[i].LocationName = AskForLocationName();
-                Venue[i].LocationAddress = AskForLocationAddress(Venue[i].LocationName);
-                Venue[i].Memo = AskForMemo(Venue[i].LocationName);
-                Venue[i].ArrivalDate = AskForArrivalDate(Venue[i].LocationName);
-                Venue[i].DepartureDate = AskForDepartureDate(Venue[i].LocationName);
-                Venue[i].ExpectedCost = AskForExpectedCost();
-
-                Console.WriteLine("");
+                //How do I save DescribeVenues into the array as an object?
+                //Venue[i] = DescribeVenues(Venues);
             }
 
             String inputWhatNow;
@@ -44,9 +37,24 @@ namespace Assignment4
                 Console.WriteLine(Venue[d].ToString());
             }
             //if (inputWhatNow.Equals("A" or "a","add","Add"))
+            //I am not sure how to resize the array here.
             int newVenues = AskForVenues();
             Array.Resize(ref Venue, Venue.Length + newVenues);
 
+        }
+
+        public static object DescribeVenues()
+        {
+            Vacation Venue = new Vacation();
+            Venue.LocationName = AskForLocationName();
+            Venue.LocationAddress = AskForLocationAddress(Venue.LocationName);
+            Venue.Memo = AskForMemo(Venue.LocationName);
+            Venue.ArrivalDate = AskForArrivalDate(Venue.LocationName);
+            Venue.DepartureDate = AskForDepartureDate(Venue.LocationName);
+            Venue.ExpectedCost = AskForExpectedCost();
+
+            Console.WriteLine("");
+            return Venue;
         }
 
         public static int AskForVenues()
