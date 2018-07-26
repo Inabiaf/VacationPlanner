@@ -1,4 +1,4 @@
-﻿/*  George Fox
+/*  George Fox
     7/17/2018
     Assignment 4
 */
@@ -16,14 +16,17 @@ namespace Assignment4
             Console.WriteLine("");
             int Venues = AskForVenues();
 
-            //Makes an array for the number of Venues, acessed with Venue[i] where i=venue number
+            //Makes an array for the number of Venues, accessed with Venue[i] where i=venue number
             Vacation[] Venue = new Vacation[Venues];
 
             for (int i = 0; i < Venues; i++)
             {
+                
+                Venue[i] = new Venue();
                 Console.WriteLine("Venue #{0}", i + 1);
                 //How do I save DescribeVenues into the array as an object?
-                //Venue[i] = DescribeVenues(Venues);
+                //Venue[i] = DescribeVenues(); - the next line is a modification if this to accommodate my adjustment of your method with the input "out" parameter
+                DescribeVenues(out Venue[i]);
             }
 
             String inputWhatNow;
@@ -38,23 +41,24 @@ namespace Assignment4
             }
             //if (inputWhatNow.Equals("A" or "a","add","Add"))
             //I am not sure how to resize the array here.
+            /*I would check this link for the info on how to resize, but you are on the right track. A very good article with an example: https://msdn.microsoft.com/en-us/library/bb348051(v=vs.110).aspx  
+Now, you need to also think on when you are calling this. I see multiple ways, one of which is to look into organizing some kind of do...while, so you can ask your user if more  vacation plans are needed after all the rest of the spots are taken, You would need to draw out this logic to decide what structure and how to use it... :) I am very happy to see you going beyond the course coverage! */
+
             int newVenues = AskForVenues();
             Array.Resize(ref Venue, Venue.Length + newVenues);
 
         }
 
-        public static object DescribeVenues()
+        public static void DescribeVenues(out Venue v) // I would use this type of parameters instead of parameter by value, this would allow you to fill in the values and use them outside of the method
         {
-            Vacation Venue = new Vacation();
-            Venue.LocationName = AskForLocationName();
-            Venue.LocationAddress = AskForLocationAddress(Venue.LocationName);
-            Venue.Memo = AskForMemo(Venue.LocationName);
-            Venue.ArrivalDate = AskForArrivalDate(Venue.LocationName);
-            Venue.DepartureDate = AskForDepartureDate(Venue.LocationName);
-            Venue.ExpectedCost = AskForExpectedCost();
+            v.LocationName = AskForLocationName();
+            v.LocationAddress = AskForLocationAddress(Venue.LocationName);
+            v.Memo = AskForMemo(Venue.LocationName);
+            v.ArrivalDate = AskForArrivalDate(Venue.LocationName);
+            v.DepartureDate = AskForDepartureDate(Venue.LocationName);
+            v.ExpectedCost = AskForExpectedCost();
 
             Console.WriteLine("");
-            return Venue;
         }
 
         public static int AskForVenues()
