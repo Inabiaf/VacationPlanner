@@ -115,7 +115,7 @@ namespace Assignment4
                     "\nDeparture Date: " +
                     departureDate +
                     "\nExpectedCost: " +
-                    ExpectedCost.ToString("c");
+                    expectedCost.ToString("c");
         }
     }
 }
